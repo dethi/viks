@@ -1,23 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WalkTo : MonoBehaviour {
 
     public Transform goal;
 
+	private NavMeshAgent agent;
+	private Animator animator;
+
     void Start()
     {
-        UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         agent.destination = goal.position;
+
+		animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (Vector3.Distance(transform.position, goal.transform.position) < 4.5)
         {
-            Animator animator = GetComponent<Animator>();
-            UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             agent.Stop();
             animator.SetBool("Attacking", true);
         }
