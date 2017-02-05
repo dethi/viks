@@ -6,7 +6,7 @@ public class WalkTo : MonoBehaviour {
 
     public Transform goal;
 
-    void Start(){
+    void Start() {
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
     }
