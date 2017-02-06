@@ -32,7 +32,7 @@ public class WalkTo : MonoBehaviour {
     }
 
     void Attack () {
-		goal.GetComponent<IHealth>().DecrementHealthBy(5);
+		goal.GetComponent<Health>().DecrementHealthBy(5);
     }
 
     void Disapear () {
