@@ -13,6 +13,11 @@ public class Kill : MonoBehaviour {
             agent.Stop();
         }
 
+        if (col.gameObject.CompareTag("Caravel"))
+        {
+            Destroy(col.gameObject);
+        }
+
         Destroy(gameObject);
     }
 }

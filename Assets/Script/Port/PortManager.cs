@@ -3,29 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PortManager : MonoBehaviour {
-    private List<GameObject> children;
+
+    public float spawnDelay = 4f;
+    private float spawnTimer = 0f;
+    
+    public GameObject shipPrefab;
+    private DockingDockController[] docks;
 
 	// Use this for initialization
-	void Start () {
-        children = new List<GameObject>();
-        foreach (Transform child in transform)
-        {
-            if (child.tag == "Port Dock")
-            {
-                children.Add(child.gameObject);
-            }
-        }
-
-        Debug.Log(children);
+	void Start ()
+    {
+        docks = GetComponentsInChildren<DockingDockController>();
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer > spawnDelay)
+        {
+            SpawnShip();
+            spawnTimer = 0;
+        }
 	}
 
-    public void Plop()
+    void SpawnShip()
     {
-        Debug.Log("ULTRA PLOP");
+        List<DockingDockController> freeDocks = new List<DockingDockController>();
+
+        foreach (DockingDockController dock in docks)
+            if (!dock.isUse())
+                freeDocks.Add(dock);
+
+        if (freeDocks.Count == 0)
+            return;
+
+        DockingDockController freeDock = freeDocks[Random.Range(0, freeDocks.Count)];
+
+        GameObject newShip = Instantiate(shipPrefab, freeDock.getSpawnPoint().position, Quaternion.identity) as GameObject;
+        newShip.transform.LookAt(freeDock.transform);
+        newShip.transform.parent = transform;
+
+        CaravelController controller = newShip.GetComponent<CaravelController>();
+        controller.setGoal(freeDock);
+        freeDock.registerShip(controller);
     }
 }
