@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PortManager : MonoBehaviour {
-
-    public float spawnDelay = 4f;
-    private float spawnTimer = 0f;
     
+    private float shipSpawnTimer = 0f;
+    
+    public Transform army;
     public GameObject shipPrefab;
+
     private DockingDockController[] docks;
 
 	// Use this for initialization
@@ -19,13 +20,13 @@ public class PortManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer > spawnDelay)
+        shipSpawnTimer += Time.deltaTime;
+        if (shipSpawnTimer > Constant.SHIP_SPAWN_DELAY)
         {
             SpawnShip();
-            spawnTimer = 0;
+            shipSpawnTimer = 0;
         }
-	}
+    }
 
     void SpawnShip()
     {
@@ -40,9 +41,9 @@ public class PortManager : MonoBehaviour {
 
         DockingDockController freeDock = freeDocks[Random.Range(0, freeDocks.Count)];
 
-        GameObject newShip = Instantiate(shipPrefab, freeDock.getSpawnPoint().position, Quaternion.identity) as GameObject;
+        GameObject newShip = Instantiate(shipPrefab, freeDock.getShipSpawnPoint().position, Quaternion.identity) as GameObject;
         newShip.transform.LookAt(freeDock.transform);
-        newShip.transform.parent = transform;
+        newShip.transform.parent = army;
 
         CaravelController controller = newShip.GetComponent<CaravelController>();
         controller.setGoal(freeDock);

@@ -4,29 +4,39 @@ using UnityEngine;
 
 public class DockingDockController : MonoBehaviour {
 
-    public Transform spawnPoint;
+    public Transform shipSpawnPoint;
+    public Transform soldierSpawnPointTransform;
+
+    private SpawnPoint soldierSpawnPoint;
 
     private CaravelController caravel;
     private bool use = false;
+
+
+    // Use this for initialization
+    void Start()
+    {
+        soldierSpawnPoint = soldierSpawnPointTransform.GetComponent<SpawnPoint>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Caravel"))
         {
-            use = true;
+            soldierSpawnPoint.setSpawning(true);
         }
     }
 
-    public Transform getSpawnPoint()
+    public Transform getShipSpawnPoint()
     {
-        return spawnPoint;
+        return shipSpawnPoint;
     }
 
     public bool isUse()
     {
         return use;
     }
-
+    
     public void registerShip(CaravelController newCaravel)
     {
         use = true;
@@ -37,5 +47,6 @@ public class DockingDockController : MonoBehaviour {
     {
         use = false;
         caravel = null;
+        soldierSpawnPoint.setSpawning(false);
     }
 }
