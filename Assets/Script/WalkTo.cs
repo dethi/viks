@@ -12,14 +12,12 @@ public class WalkTo : MonoBehaviour {
 	private Animator animator;
     private Transform goal;
 
-    void Start()
-    {
+    void Start () {
         agent = GetComponent<NavMeshAgent>();
 		animator = GetComponent<Animator>();
     }
 
-    void Update()
-    {
+	void Update () {
         if (goal && Vector3.Distance(transform.position, goal.transform.position) < 20)
         {
             agent.Stop();
@@ -27,21 +25,17 @@ public class WalkTo : MonoBehaviour {
         }
     }
 
-    public void SetGoal(Transform plop)
-    {
+    public void SetGoal (Transform plop) {
         this.goal = plop;
         agent = GetComponent<NavMeshAgent>();
         agent.destination = plop.position;
     }
 
-    void Attack()
-    {
-        goal.transform.Translate(new Vector3(0, 0, -0.05f));
-        //health.value -= 5;
+    void Attack () {
+		goal.GetComponent<IHealth>().DecrementHealthBy(5);
     }
 
-    void Disapear()
-    {
+    void Disapear () {
         Destroy(gameObject, 2);
     }
 }
