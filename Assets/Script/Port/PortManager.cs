@@ -23,4 +23,9 @@ public class PortManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void Plop()
+    {
+        Debug.Log("ULTRA PLOP");
+    }
 }

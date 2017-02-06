@@ -9,6 +9,7 @@ public class DockingDock : MonoBehaviour {
         if (other.CompareTag("Caravel"))
         {
             //Debug.Log("DockingDock: Collider");
+            SendMessageUpwards("Plop");
         }
     }
 }
