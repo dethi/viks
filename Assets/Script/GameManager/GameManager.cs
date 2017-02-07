@@ -24,10 +24,11 @@ public class GameManager : MonoBehaviour {
         {
             if (spawnPoint.canSpawn())
             {
-                spawnPoint.spawn(soldierPrefab, army, (GameObject obj) =>
+                spawnPoint.spawn(soldierPrefab, (GameObject obj) =>
                 {
-                    obj.GetComponent<NavMeshAgent>().destination = goal.position;
+                    obj.GetComponent<WalkTo>().SetGoal(goal);
                     obj.transform.LookAt(goal);
+                    obj.transform.parent = army;
                 });
             }
         }

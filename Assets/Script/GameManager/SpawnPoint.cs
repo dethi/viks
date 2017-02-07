@@ -27,13 +27,12 @@ public class SpawnPoint : MonoBehaviour {
         }
 	}
 
-    public void spawn(GameObject prefab, Transform parent, Action<GameObject> init)
+    public void spawn(GameObject prefab, Action<GameObject> init)
     {
         if (!_canSpawn)
             return;
 
         GameObject newObj = Instantiate(prefab, transform.position, Quaternion.identity) as GameObject;
-        newObj.transform.parent = parent;
         init(newObj);
 
         _canSpawn = false;
