@@ -15,6 +15,8 @@ namespace DigitalRuby.PyroParticles
     /// </summary>
     public class FireProjectileScript : FireBaseScript, ICollisionHandler
     {
+        public GameObject FireballExplosion;
+
         [Tooltip("The collider object to use for collision and physics.")]
         public GameObject ProjectileColliderObject;
 
@@ -104,6 +106,8 @@ namespace DigitalRuby.PyroParticles
                     CollisionDelegate(this, c.contacts[0].point);
                 }
             }
+            GameObject explosion = Instantiate(FireballExplosion, c.contacts[0].point, Quaternion.identity) as GameObject;
+            explosion.transform.parent = transform;
         }
     }
 }
