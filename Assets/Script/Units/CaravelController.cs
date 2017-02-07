@@ -7,6 +7,7 @@ public class CaravelController : MonoBehaviour
 {
     private Transform goal;
     private NavMeshAgent agent;
+    private Health health;
 
     private DockingDockController dockController;
 
@@ -15,6 +16,8 @@ public class CaravelController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        health = GetComponent<Health>();
+        health.deadCallback = Dead;
     }
 
     void Update()
@@ -40,8 +43,11 @@ public class CaravelController : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    public void Dead ()
     {
-        dockController.unRegisterShip();
+        if (dockController)
+            dockController.unRegisterShip();
+
+        Destroy(gameObject);
     }
 }

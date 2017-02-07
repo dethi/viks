@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
             {
                 spawnPoint.spawn(soldierPrefab, (GameObject obj) =>
                 {
-                    obj.GetComponent<WalkTo>().SetGoal(goal);
+                    obj.GetComponent<WarriorController>().SetGoal(goal);
                     obj.transform.LookAt(goal);
                     obj.transform.parent = army;
                 });

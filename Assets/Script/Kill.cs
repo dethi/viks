@@ -7,15 +7,12 @@ public class Kill : MonoBehaviour {
 
     void OnCollisionEnter(Collision col) {
         if (col.gameObject.name.Contains("Warrior")) {
-            Animator animator = col.gameObject.GetComponent<Animator>();
-            NavMeshAgent agent = col.gameObject.GetComponent<NavMeshAgent>();
-            animator.SetBool("Dead", true);
-            agent.Stop();
+            col.gameObject.GetComponent<WarriorController>().Dead();
         }
 
         if (col.gameObject.CompareTag("Caravel"))
         {
-            Destroy(col.gameObject);
+            col.gameObject.GetComponent<CaravelController>().Dead();
         }
 
         Destroy(gameObject);

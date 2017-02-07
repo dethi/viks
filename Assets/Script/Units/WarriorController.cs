@@ -4,17 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class WalkTo : MonoBehaviour {
+public class WarriorController : MonoBehaviour {
     
-    public Slider health;
-
 	private NavMeshAgent agent;
 	private Animator animator;
+    private Health health;
+
     private Transform goal;
 
     void Start () {
         agent = GetComponent<NavMeshAgent>();
 		animator = GetComponent<Animator>();
+        health = GetComponent<Health>();
+        health.deadCallback = Dead;
     }
 
 	void Update () {
@@ -29,6 +31,12 @@ public class WalkTo : MonoBehaviour {
         this.goal = plop;
         agent = GetComponent<NavMeshAgent>();
         agent.destination = plop.position;
+    }
+
+    public void Dead ()
+    {
+        animator.SetBool("Dead", true);
+        agent.Stop();
     }
 
     void Attack () {
