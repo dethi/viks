@@ -17,10 +17,14 @@ namespace DigitalRuby.PyroParticles
     public class FireCollisionForwardScript : MonoBehaviour
     {
         public ICollisionHandler CollisionHandler;
+        public GameObject MeteorExplosion;
 
         public void OnCollisionEnter(Collision col)
         {
             CollisionHandler.HandleCollision(gameObject, col);
+
+            GameObject explosion = Instantiate(MeteorExplosion, col.contacts[0].point, Quaternion.identity) as GameObject;
+            explosion.transform.parent = transform;
         }
     }
 }
