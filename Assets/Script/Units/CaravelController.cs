@@ -20,10 +20,6 @@ public class CaravelController : MonoBehaviour
         health.deadCallback = Dead;
     }
 
-    void Update()
-    {
-    }
-
     public void setGoal(DockingDockController newdockController)
     {
         agent = GetComponent<NavMeshAgent>();

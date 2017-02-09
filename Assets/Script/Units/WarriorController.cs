@@ -25,10 +25,6 @@ public class WarriorController : MonoBehaviour
         health.deadCallback = Dead;
     }
 
-    void Update()
-    {
-    }
-
     public void SetGoal(Transform plop)
     {
         if (!plop)
