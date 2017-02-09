@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public GameObject soldierPrefab;
     public GameObject orcPrefab;
+
+    public GameObject gameOver;
 
     private Transform _goal;
     public Transform lighthouse;
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        gameOver.SetActive(false);
         spawnPoints = GetComponentsInChildren<SpawnPoint>();
         _goal = firstGate;
     }
@@ -42,9 +46,20 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
+    void Restart()
+    {
+        SceneManager.LoadScene("main");
+    }
+
     void TowerDestroy(string towerName)
     {
-        Debug.Log("TowerDestroy: " + towerName);
+        if (towerName == lighthouse.name)
+        {
+            gameOver.SetActive(true);
+            Invoke("Restart", 3);
+            return;
+        }
+
         _goal = lighthouse;
 
         if (towerName == firstGate.name)
@@ -57,6 +72,7 @@ public class GameManager : MonoBehaviour {
                     warriorController.SetGoal(_goal);
                 }
             }
+            return;
         }
     }
 }

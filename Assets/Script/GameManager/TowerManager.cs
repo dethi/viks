@@ -43,7 +43,7 @@ public class TowerManager : MonoBehaviour {
         explosionSound.Play();
 
         Destroy(gameObject, 4);
-
+        
         SendMessageUpwards("TowerDestroy", name);
     }
 }

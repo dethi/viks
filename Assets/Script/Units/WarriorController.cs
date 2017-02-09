@@ -31,6 +31,9 @@ public class WarriorController : MonoBehaviour
 
     public void SetGoal(Transform plop)
     {
+        if (!plop)
+            return;
+
         this.goal = plop;
         GetComponent<Animator>().SetBool("Attacking", false);
         agent = GetComponent<NavMeshAgent>();
