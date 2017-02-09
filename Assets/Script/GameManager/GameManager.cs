@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class GameManager : MonoBehaviour {
 
     public GameObject soldierPrefab;
+    public GameObject orcPrefab;
 
     private Transform _goal;
     public Transform lighthouse;
@@ -27,7 +28,11 @@ public class GameManager : MonoBehaviour {
         {
             if (spawnPoint.canSpawn())
             {
-                spawnPoint.spawn(soldierPrefab, (GameObject obj) =>
+                GameObject prefab = soldierPrefab;
+                if (Random.Range(0f, 1f) < 0.1f)
+                    prefab = orcPrefab;
+
+                spawnPoint.spawn(prefab, (GameObject obj) =>
                 {
                     obj.GetComponent<WarriorController>().SetGoal(_goal);
                     obj.transform.LookAt(_goal);

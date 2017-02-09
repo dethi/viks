@@ -61,7 +61,6 @@ public class Health : MonoBehaviour {
 
         if (health == 0 && alive)
         {
-            Debug.Log("Dead: " + name);
             alive = false;
             deadCallback();
         }

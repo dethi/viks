@@ -14,6 +14,8 @@ public class WarriorController : MonoBehaviour
 
     private Transform goal;
 
+    public int AttackPower = 5;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,7 +54,7 @@ public class WarriorController : MonoBehaviour
 
         Health gh = goal.GetComponent<Health>();
         if (gh)
-            gh.DecrementHealthBy(5);
+            gh.DecrementHealthBy(AttackPower);
     }
 
     void Disapear()
