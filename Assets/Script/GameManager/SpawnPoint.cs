@@ -46,10 +46,8 @@ public class SpawnPoint : MonoBehaviour {
     public void setSpawning(bool spawning)
     {
         _spawning = spawning;
+        _canSpawn = spawning;
         if (!spawning)
-        {
-            _canSpawn = false;
             _spawnTimer = 0f;
-        }
     }
 }

@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour {
 
     public GameObject soldierPrefab;
 
-    public Transform goal;
+    private Transform _goal;
+    public Transform lighthouse;
+    public Transform firstGate;
     public Transform army;
 
     private SpawnPoint[] spawnPoints;
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour {
     void Start ()
     {
         spawnPoints = GetComponentsInChildren<SpawnPoint>();
+        _goal = firstGate;
     }
 	
 	// Update is called once per frame
@@ -26,11 +29,29 @@ public class GameManager : MonoBehaviour {
             {
                 spawnPoint.spawn(soldierPrefab, (GameObject obj) =>
                 {
-                    obj.GetComponent<WarriorController>().SetGoal(goal);
-                    obj.transform.LookAt(goal);
+                    obj.GetComponent<WarriorController>().SetGoal(_goal);
+                    obj.transform.LookAt(_goal);
                     obj.transform.parent = army;
                 });
             }
         }
 	}
+
+    void TowerDestroy(string towerName)
+    {
+        Debug.Log("TowerDestroy: " + towerName);
+        _goal = lighthouse;
+
+        if (towerName == firstGate.name)
+        {
+            foreach (Transform child in army)
+            {
+                WarriorController warriorController = child.GetComponent<WarriorController>();
+                if (warriorController)
+                {
+                    warriorController.SetGoal(_goal);
+                }
+            }
+        }
+    }
 }
