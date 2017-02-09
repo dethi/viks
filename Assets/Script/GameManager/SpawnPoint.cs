@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour {
-    
+
+    public string _type;
+
     private bool _spawning = false;
     private bool _canSpawn = false;
     private float _spawnTimer = 0f;
@@ -26,6 +28,11 @@ public class SpawnPoint : MonoBehaviour {
             }
         }
 	}
+
+    public string getTypeSoldier()
+    {
+        return _type;
+    }
 
     public void spawn(GameObject prefab, Action<GameObject> init)
     {

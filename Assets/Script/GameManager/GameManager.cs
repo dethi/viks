@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour {
     private Transform _goal;
     public Transform lighthouse;
     public Transform firstGate;
+    public Transform mountainGate;
     public Transform army;
+
+    int goal_state = 0; // 0: beach / 1: moutain / 2goal
 
     private SpawnPoint[] spawnPoints;
 
@@ -33,18 +36,34 @@ public class GameManager : MonoBehaviour {
             if (spawnPoint.canSpawn())
             {
                 GameObject prefab = soldierPrefab;
-                if (Random.Range(0f, 1f) < 0.1f)
+                if (spawnPoint.getTypeSoldier() == "orc")
                     prefab = orcPrefab;
 
                 spawnPoint.spawn(prefab, (GameObject obj) =>
                 {
-                    obj.GetComponent<WarriorController>().SetGoal(_goal);
-                    obj.transform.LookAt(_goal);
+                    Transform newGoal = getGoal();
+                    obj.GetComponent<WarriorController>().SetGoal(newGoal);
+                    obj.transform.LookAt(newGoal);
                     obj.transform.parent = army;
                 });
             }
         }
 	}
+
+    Transform getGoal()
+    {
+        if (goal_state == 0)
+            return firstGate;
+        if (goal_state == 1)
+        {
+            if (Random.Range(0f, 1f) > 0.7f)
+                return mountainGate;
+            else
+                return lighthouse;
+        }
+
+        return lighthouse;
+    }
 
     void Restart()
     {
@@ -60,16 +79,31 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        _goal = lighthouse;
-
-        if (towerName == firstGate.name)
+        if (towerName == mountainGate.name)
         {
+            goal_state = 2;
+
             foreach (Transform child in army)
             {
                 WarriorController warriorController = child.GetComponent<WarriorController>();
                 if (warriorController)
                 {
-                    warriorController.SetGoal(_goal);
+                    warriorController.SetGoal(getGoal());
+                }
+            }
+            return;
+        }
+
+        if (towerName == firstGate.name)
+        {
+            goal_state = 1;
+
+            foreach (Transform child in army)
+            {
+                WarriorController warriorController = child.GetComponent<WarriorController>();
+                if (warriorController)
+                {
+                    warriorController.SetGoal(getGoal());
                 }
             }
             return;
