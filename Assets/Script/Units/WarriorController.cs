@@ -25,11 +25,6 @@ public class WarriorController : MonoBehaviour
 
     void Update()
     {
-        if (goal && Vector3.Distance(transform.position, goal.transform.position) < 10)
-        {
-            agent.Stop();
-            animator.SetBool("Attacking", true);
-        }
     }
 
     public void SetGoal(Transform plop)
@@ -49,7 +44,7 @@ public class WarriorController : MonoBehaviour
 
     void Attack()
     {
-        if (goal && Vector3.Distance(transform.position, goal.transform.position) > 15)
+        if (goal && Vector3.Distance(transform.position, goal.transform.position) > 50)
         {
             animator.SetBool("Attacking", false);
             return;
@@ -63,5 +58,14 @@ public class WarriorController : MonoBehaviour
     void Disapear()
     {
         Destroy(gameObject, 2);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Mission"))
+        {
+            agent.Stop();
+            animator.SetBool("Attacking", true);
+        }
     }
 }

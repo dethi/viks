@@ -61,12 +61,13 @@ public class Health : MonoBehaviour {
 
         if (health == 0 && alive)
         {
+            Debug.Log("Dead: " + name);
             alive = false;
             deadCallback();
         }
 	}
 
 	public void DecrementHealthBy (int v) {
-		health -= v;
-	}
+        health -= v;
+    }
 }

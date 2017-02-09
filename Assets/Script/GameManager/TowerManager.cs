@@ -46,4 +46,9 @@ public class TowerManager : MonoBehaviour {
 
         SendMessageUpwards("TowerDestroy", name);
     }
+
+    void OnDestroy()
+    {
+        Debug.Log("Dead");
+    }
 }
