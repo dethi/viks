@@ -64,6 +64,11 @@ public class GodPower : MonoBehaviour {
                 obj.transform.Rotate(spell.rotationVector);
                 obj.transform.parent = spells;
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
     }
 }
