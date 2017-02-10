@@ -23,8 +23,11 @@ namespace DigitalRuby.PyroParticles
         {
             CollisionHandler.HandleCollision(gameObject, col);
 
-            GameObject explosion = Instantiate(MeteorExplosion, col.contacts[0].point, Quaternion.identity) as GameObject;
-            explosion.transform.parent = transform;
+            if (MeteorExplosion)
+            {
+                GameObject explosion = Instantiate(MeteorExplosion, col.contacts[0].point, Quaternion.identity) as GameObject;
+                explosion.transform.parent = transform;
+            }
         }
     }
 }
