@@ -21,7 +21,7 @@ public class SpawnPoint : MonoBehaviour {
 		if (_spawning && !_canSpawn)
         {
             _spawnTimer += Time.deltaTime;
-            if (_spawnTimer > Constant.SOLDIER_SPAWN_DELAY)
+            if (_spawnTimer > (_type == "solder" ? Constant.SOLDIER_SPAWN_DELAY : Constant.ORC_SPAWN_DELAY))
             {
                 _canSpawn = true;
                 _spawnTimer = 0f;

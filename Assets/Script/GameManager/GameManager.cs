@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
             return firstGate;
         if (goal_state == 1)
         {
-            if (Random.Range(0f, 1f) > 0.7f)
+            if (Random.Range(0f, 1f) > 0.5f)
                 return mountainGate;
             else
                 return lighthouse;
