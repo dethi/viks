@@ -9,25 +9,40 @@ public class SpawnPoint : MonoBehaviour {
 
     private bool _spawning = false;
     private bool _canSpawn = false;
+
     private float _spawnTimer = 0f;
+    private float _spawnDelay;
+    private float _spawnDelayMin;
+    private float _difficultyTimer = 0f;
+    private bool _increase = false;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        _spawnDelay = (_type == "warrior" ? Constant.SOLDIER_SPAWN_DELAY : Constant.ORC_SPAWN_DELAY);
+        _spawnDelayMin = (_type == "warrior" ? Constant.SOLDIER_SPAWN_DELAY_MIN : Constant.ORC_SPAWN_DELAY_MIN);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if (_spawning && !_canSpawn)
         {
             _spawnTimer += Time.deltaTime;
-            if (_spawnTimer > (_type == "solder" ? Constant.SOLDIER_SPAWN_DELAY : Constant.ORC_SPAWN_DELAY))
+            if (_spawnTimer > _spawnDelay)
             {
                 _canSpawn = true;
                 _spawnTimer = 0f;
             }
         }
-	}
+        if (_increase)
+        {
+            _difficultyTimer += Time.deltaTime;
+            if (_difficultyTimer > Constant.TIMER_INCREASE_DIFFICULTY)
+            {
+                _spawnDelay = Math.Max(_spawnDelayMin, _spawnDelay - 0.2f);
+                _difficultyTimer = 0f;
+            }
+        }
+    }
 
     public string getTypeSoldier()
     {
@@ -52,6 +67,7 @@ public class SpawnPoint : MonoBehaviour {
 
     public void setSpawning(bool spawning)
     {
+        _increase = true;
         _spawning = spawning;
         _canSpawn = spawning;
         if (!spawning)

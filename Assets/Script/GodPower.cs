@@ -13,8 +13,9 @@ public class GodPower : MonoBehaviour {
     public GameObject thunderPrefab;
     public SpellReload thunderReload;
 
-
     public GameObject meteorPrefab;
+    public SpellReload meteorReload;
+
     public Transform spells;
 
     private Vector3 rotationVector = new Vector3(-90, 0, 0);
@@ -54,8 +55,9 @@ public class GodPower : MonoBehaviour {
                 obj.transform.parent = spells;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && meteorReload.canUse())
             {
+                meteorReload.use();
                 GameObject obj = Instantiate(meteorPrefab, Vector3.zero, Quaternion.identity) as GameObject;
                 Spell spell = obj.GetComponent<Spell>();
                 spell.transform.position = hit.point + spell.hitpoint;
