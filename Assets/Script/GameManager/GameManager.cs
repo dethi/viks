@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour {
     public GameObject orcPrefab;
 
     public GameObject gameOver;
+    public Text scoreText;
+    private int _score = 0;
+    private float _scoreTimer = 0;
 
     private Transform _goal;
     public Transform lighthouse;
@@ -31,7 +35,16 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		foreach (SpawnPoint spawnPoint in spawnPoints)
+        _scoreTimer += Time.deltaTime;
+        if (_scoreTimer > Constant.SCORE_INCREASE_DELAY)
+        {
+            _score++;
+            _scoreTimer = 0f;
+        }
+
+        scoreText.text = _score.ToString();
+
+        foreach (SpawnPoint spawnPoint in spawnPoints)
         {
             if (spawnPoint.canSpawn())
             {
@@ -68,6 +81,11 @@ public class GameManager : MonoBehaviour {
     void Restart()
     {
         SceneManager.LoadScene("main");
+    }
+
+    void AddScore(int v)
+    {
+        _score += v;
     }
 
     void TowerDestroy(string towerName)

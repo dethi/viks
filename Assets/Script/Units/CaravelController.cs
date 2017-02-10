@@ -41,6 +41,8 @@ public class CaravelController : MonoBehaviour
 
     public void Dead ()
     {
+        SendMessageUpwards("AddScore", 60);
+
         if (dockController)
             dockController.unRegisterShip();
 

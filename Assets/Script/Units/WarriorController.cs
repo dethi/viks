@@ -58,6 +58,8 @@ public class WarriorController : MonoBehaviour
 
     void Disapear()
     {
+        SendMessageUpwards("AddScore", AttackPower);
+       
         Destroy(gameObject, 2);
     }
 
